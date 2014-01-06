@@ -4,6 +4,7 @@ Asagao::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
   get "about" => "top#about", as: "about"
+  get "lesson/:action(/:name)" => "lesson"
   
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
