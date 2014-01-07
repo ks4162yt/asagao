@@ -38,6 +38,23 @@ class LessonController < ApplicationController
     def step11
         @comment = "<script>alert('危険')</script>こんにちは。"
     end
+    def step12
+        @population = 704414
+        @surface = 141.31
+    end
+    def step13
+        @time = Time.now
+    end                    
+    def step14
+        @population = 127767944
+    end
+    def step15
+        @message = "ご機嫌いかが？\nRailsの勉強をがんばりましょう"
+    end
+    def step19
+        @items = { "フライパン" => 2680, "ワイングラス" => 2550,
+                    "ペッパーミル" => 4515, "ヒーラー" => 945 }
+    end
 
     private
     def do_before
