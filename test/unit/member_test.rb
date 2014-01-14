@@ -1,7 +1,15 @@
+#coding: utf-8
+
 require 'test_helper'
 
 class MemberTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+   test "the truth" do
+     assert true
+   end
+  
+  test "factory girl" do
+    member = Factory(:member)
+    p member.full_name
+    assert_equal "Yamada Taro", member.full_name
+  end
 end

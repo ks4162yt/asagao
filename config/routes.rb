@@ -32,6 +32,8 @@ Asagao::Application.routes.draw do
     collection { get "search" }
   end
 
+  resources :article
+
   # Sample resource route with sub-resources:
   #   resources :products do
   #     resources :comments, :sales

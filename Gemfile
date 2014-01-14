@@ -6,6 +6,7 @@ gem 'rails', '3.2.16'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'rails-i18n'
 
 
 # Gems used only for assets and not required
@@ -19,6 +20,8 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 end
+
+
 
 gem 'jquery-rails'
 gem 'execjs'
@@ -38,3 +41,8 @@ gem 'therubyracer'
 
 # To use debugger
 # gem 'debugger'
+
+#Gems used for test
+group :test do
+  gem 'factory_girl_rails', '~> 1.4.0'
+end
