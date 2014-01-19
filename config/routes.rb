@@ -33,6 +33,7 @@ Asagao::Application.routes.draw do
   end
 
   resources :articles
+  resource :session, only: [:create, :destroy]
 
   # Sample resource route with sub-resources:
   #   resources :products do
@@ -54,6 +55,13 @@ Asagao::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+    namespace :admin do
+      root to: "top#index"
+      resources :members do
+        collection { get "search" }
+      end
+      resources :articles
+    end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

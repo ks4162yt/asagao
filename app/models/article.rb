@@ -20,14 +20,17 @@ class Article < ActiveRecord::Base
     self.expired_at = nil if @no_expiration
   end
   
-  scope :readable,
-    ->{ now = Time.current
-        where("released_at <= ? AND (? < expired_at OR " + 
-        "expired_at IS NULL)", now, now) }
+  scope :readable_for,
+    ->(member){ 
+        now = Time.current
+        rel = where("released_at <= ? AND (? < expired_at OR " + 
+        "expired_at IS NULL)", now, now) 
+        member.kind_of?(Member) ? rel : rel.where(member_only: false)
+      }
   #class method
   class << self
-    def sidebar_articles(num = 5)
-      readable.order("released_at DESC").limit(num)
+    def sidebar_articles(member, num = 5)
+      readable_for(member).order("released_at DESC").limit(num)
     end
   end
 

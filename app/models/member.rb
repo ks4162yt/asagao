@@ -1,6 +1,7 @@
 class Member < ActiveRecord::Base
   include EmailAddressChecker
   attr_protected
+  attr_accessor :password, :password_confirmation
 
   class << self
     def search(query)
@@ -11,6 +12,24 @@ class Member < ActiveRecord::Base
       end
       rel
     end
+
+    def authenticate(name, password)
+      member = find_by_name(name)
+      if member && member.hashed_password.present? &&
+          BCrypt::Password.new(member.hashed_password) == password
+        member
+      else
+        nil
+      end
+    end
+  end
+
+
+  def password=(val)
+    if val.present?
+      self.hashed_password = BCrypt::Password.create(val)
+    end
+      @password = val
   end
 
   validates :number, presence: true,
@@ -27,6 +46,9 @@ class Member < ActiveRecord::Base
   validates :full_name, length: { maximum: 20 }
 
   validate :check_email
+
+  validates :password, presence: { on: :create },
+    confirmation: { allow_blank: true }
 
   private
   def check_email
