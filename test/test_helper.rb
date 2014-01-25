@@ -17,3 +17,12 @@ class ActiveSupport::TestCase
                                     administrator: admin).id
   end
 end
+
+class ActionDispatch::IntegrationTest
+  private
+  # ログイン状態にする
+  def login_as(name, admin = false)
+    Factory(:member, name: name, administrator: admin)
+    post "/session", name: name, password: "password"
+  end
+end

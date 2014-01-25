@@ -1,7 +1,13 @@
 class Member < ActiveRecord::Base
   include EmailAddressChecker
-  attr_protected
+
+  has_one :image, class_name: "MemberImage", dependent: :destroy
+
   attr_accessor :password, :password_confirmation
+  ACCESSIBLE_ATTRS = [:name, :full_name, :gender, :birthday, :email,
+    :password, :password_confirmation]
+  attr_accessible *ACCESSIBLE_ATTRS
+  attr_accessible *(ACCESSIBLE_ATTRS + [:number, :administrator]), as: :admin
 
   class << self
     def search(query)

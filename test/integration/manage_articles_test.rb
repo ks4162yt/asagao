@@ -6,15 +6,17 @@ class ManageArticlesTest < ActionDispatch::IntegrationTest
   #   assert true
   # end
   test "add an article" do
-    get"/articles/new"
+   login_as("taro", true)
+
+    get"/admin//articles/new"
     assert_response :success
 
-    post "/articles", article: Factory.attributes_for(:article, title: "")
+    post "/admin/articles", article: Factory.attributes_for(:article, title: "")
       assert_template "new"
       assert_select "h2", "エラーがあります。"
 
-    post "/articles", article: Factory.attributes_for(:article, title: "テスト記事")
-    assert_redirected_to assigns[:article]
+    post "/admin/articles", article: Factory.attributes_for(:article, title: "テスト記事")
+    assert_redirected_to [:admin, assigns[:article]]
     follow_redirect! #リダイレクト先のページを読み込ませるメソッド
     assert_select "h1", "テスト記事"
   end

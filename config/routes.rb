@@ -28,12 +28,13 @@ Asagao::Application.routes.draw do
   #       get 'sold'
   #     end
   #   end
-  resources :members do
+  resources :members, only: [:index, :show] do
     collection { get "search" }
   end
 
-  resources :articles
+  resources :articles, only: [:index, :show]
   resource :session, only: [:create, :destroy]
+  resource :account, only: [:show, :edit, :update] #単数リソース
 
   # Sample resource route with sub-resources:
   #   resources :products do
@@ -73,4 +74,6 @@ Asagao::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+  match "*anything" => "top#not_found"
 end

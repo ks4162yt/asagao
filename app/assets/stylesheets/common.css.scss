@@ -92,6 +92,13 @@ div#content {
     font-size: 90%;
     line-height: 1.5;
   }
+  
+  p.article_footer {
+    border-top: 1px #ccf dashed;
+    padding-top: 4px;
+    text-align: right;
+    font-size: 75%;
+  }
 }
 
 /* サイドバー */
@@ -177,4 +184,17 @@ div#errors {
 div.field_with_errors {
   background-color: #fcc;
   padding: 2px;
+}
+
+div.pagination {
+  font-size: 75%;
+  padding: 4px 8px;
+  border: 1px solid #499;
+  word-spacing: 4px;
+
+  em { font-style: normal; }
+  em.current {
+    color: #499;
+    font-weight: bold;
+  }
 }

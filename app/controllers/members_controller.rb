@@ -5,7 +5,8 @@ class MembersController < ApplicationController
   before_filter :login_required
 
   def index
-    @members = Member.order("number")
+    @members = Member.order("number").
+      paginate(page: params[:page], per_page: 15)
   end
 
   def search
@@ -15,38 +16,23 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-  end
-
-  def new
-    @member = Member.new(birthday: Date.new(1980, 1, 1))
-  end
-
-  def edit
-    @member = Member.find(params[:id])
-  end
-
-  def create
-    @member = Member.new(params[:member])
-    if @member.save
-      redirect_to @member, notice: "会員を登録しました"
+    if params[:format].in?(["jpg", "png", "gif"])
+      send_image
     else
-      render "new"
+      render "members/show"
     end
   end
 
-  def update
-    @member = Member.find(params[:id])
-    @member.assign_attributes(params[:member])
-    if @member.save
-      redirect_to @member, notice: "会員情報を更新しました"
+  private
+  # 画像送信
+  def send_image
+    if @member.image.present?
+      #disposition inlineはブラウザがダウンロード画面を表示しないようにする
+      send_data @member.image.data,
+        type: @member.image.content_type, disposition: "inline" 
     else
-      render "edit"
+      raise NotFound
     end
   end
 
-  def destroy
-    @member = Member.find(params[:id])
-    @member.destroy
-    redirect_to :members, notice: "会員を削除しました"
-  end
 end
